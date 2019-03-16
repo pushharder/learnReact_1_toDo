@@ -7,6 +7,7 @@ module.exports = {
         filename: 'build.js',
         path: path.join(__dirname, '/dist')
     },
+    devtool: 'eval-source-map',
     devServer: {
         contentBase: path.join(__dirname, '/dist')
     },
