@@ -2,7 +2,7 @@ const path = require('path');
 const html_webpack_plugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: path.join(__dirname, 'src/index.js'),
+    entry: path.join(__dirname, 'src/index.tsx'),
     output: {
         filename: 'build.js',
         path: path.join(__dirname, '/dist')
