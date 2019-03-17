@@ -19,7 +19,8 @@
   "homepage": "https://github.com/pushharder/learnReact_1_toDo#readme",
   "dependencies": {
     "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react-dom": "^16.8.4",
+    "styled-components": "^4.1.3"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
@@ -28,7 +29,9 @@
     "@babel/preset-typescript": "^7.3.3",
     "@types/react": "^16.8.8",
     "@types/react-dom": "^16.8.2",
+    "@types/styled-components": "^4.1.12",
     "babel-loader": "^8.0.5",
+    "babel-plugin-styled-components": "^1.10.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "html-webpack-plugin": "^3.2.0",
     "typescript": "^3.3.3333",
