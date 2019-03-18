@@ -1,28 +1,25 @@
-import * as React from 'react';
+import * as React from "react";
 
-import ListItem from '../ListItem/ListItem'
+import ListItem from "../ListItem/ListItem";
 
 export class List extends React.Component {
-    getList(){
-        let a = [];
+  getList() {
+    let a = [];
 
-        for(let i = 0; i < 10; i++){
-            a.push((
-                <li key={i}>
-                     <ListItem/>   
-                </li>
-                
-            ));
-        }
-        return a;
+    for (let i = 0; i < 10; i++) {
+      a.push(
+        <li key={i}>
+          <ListItem />
+        </li>
+      );
     }
-    render(){
-        return (
-            <div>
-                <ul>{this.getList()}
-                    
-                </ul>
-            </div>
-        )
-    }
+    return a;
+  }
+  render() {
+    return (
+      <div>
+        <ul>{this.getList()}</ul>
+      </div>
+    );
+  }
 }

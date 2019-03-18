@@ -1,11 +1,7 @@
-import * as React from 'react';
+import * as React from "react";
 
 export default class ListItem extends React.Component {
-    render(){
-        return (
-            <div>
-                ListItem
-            </div>
-        )
-    }
+  render() {
+    return <div>ListItem</div>;
+  }
 }
