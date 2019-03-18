@@ -1,10 +1,27 @@
 import * as React from 'react';
 
+import ListItem from '../ListItem/ListItem'
+
 export class List extends React.Component {
+    getList(){
+        let a = [];
+
+        for(let i = 0; i < 10; i++){
+            a.push((
+                <li key={i}>
+                     <ListItem/>   
+                </li>
+                
+            ));
+        }
+        return a;
+    }
     render(){
         return (
             <div>
-                List
+                <ul>{this.getList()}
+                    
+                </ul>
             </div>
         )
     }
