@@ -6,11 +6,26 @@ import { List } from "./../List/List";
 
 import { AppWrapper, ToDoWindow } from "./AppStyles";
 import GlobalStyles from "./GlobalStyles";
+import BackendServie from "./../../services/backend";
+import { AppState, DefaultProps } from "../../interfaces";
 
-export class App extends React.Component {
-	private name: string = "asdf";
+const backendService = BackendServie.getInstacne();
+
+export class App extends React.Component<DefaultProps, AppState> {
 	constructor(props: any) {
 		super(props);
+
+		this.state = {
+			tasks: []
+		};
+	}
+
+	componentDidMount() {
+		backendService.getTasks(taskList => {
+			this.setState((state, props) => {
+				return Object.assign({}, state, { tasks: taskList });
+			});
+		});
 	}
 
 	render() {
@@ -18,12 +33,23 @@ export class App extends React.Component {
 			<AppWrapper>
 				<ToDoWindow>
 					<Header />
-					<List />
-					<Footer />
+					{this.getList()}
+					{this.getFooter()}
 				</ToDoWindow>
-
 				<GlobalStyles />
 			</AppWrapper>
 		);
+	}
+
+	private getFooter() {
+		return this.state.tasks.length ? (
+			<Footer tasks={this.state.tasks} />
+		) : null;
+	}
+
+	private getList() {
+		return this.state.tasks.length ? (
+			<List tasks={this.state.tasks} />
+		) : null;
 	}
 }

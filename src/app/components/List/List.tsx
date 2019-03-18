@@ -1,19 +1,18 @@
 import * as React from "react";
 
 import ListItem from "../ListItem/ListItem";
+import { DefaultState, ListProps } from "./../../interfaces";
 
-export class List extends React.Component {
+export class List extends React.Component<ListProps, DefaultState> {
+	constructor(props: ListProps) {
+		super(props);
+	}
 	getList() {
-		let a = [];
-
-		for (let i = 0; i < 10; i++) {
-			a.push(
-				<li key={i}>
-					<ListItem />
-				</li>
-			);
-		}
-		return a;
+		return this.props.tasks.map(task => (
+			<li key={task.id}>
+				<ListItem />
+			</li>
+		));
 	}
 	render() {
 		return (
