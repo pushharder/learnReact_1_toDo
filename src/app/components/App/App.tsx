@@ -24,11 +24,8 @@ export class App extends React.Component<IDefaultProps, IAppState> {
 	componentDidMount() {
 		backendService.getTasks().then(
 			(taskList: Task[]): void => {
-				this.setState(state => {
-					return Object.assign({}, state, {
-						tasks: taskList,
-						allDone: true
-					});
+				this.setState({
+					tasks: taskList
 				});
 			}
 		);
