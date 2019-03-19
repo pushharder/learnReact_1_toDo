@@ -1,10 +1,10 @@
 import * as React from "react";
 
 import ListItem from "../ListItem/ListItem";
-import { DefaultState, ListProps } from "./../../interfaces";
+import { IDefaultState, IListProps } from "./../../interfaces";
 
-export class List extends React.Component<ListProps, DefaultState> {
-	constructor(props: ListProps) {
+export class List extends React.Component<IListProps, IDefaultState> {
+	constructor(props: IListProps) {
 		super(props);
 	}
 	getList() {

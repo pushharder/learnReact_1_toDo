@@ -1,8 +1,20 @@
 import * as React from "react";
 import { FooterWrapper } from "./FooterStyles";
+import { IFooterProps, IDefaultState } from "../../interfaces";
 
-export class Footer extends React.Component<{ tasks: any }, {}> {
+export class Footer extends React.Component<IFooterProps, IDefaultState> {
+	private getFooterContent(): JSX.Element {
+		return getFooootre(this.props.tasks.length);
+	}
 	render() {
-		return <FooterWrapper>{this.props.tasks[0].text}</FooterWrapper>;
+		return this.getFooterContent();
 	}
 }
+// temporary function to try JSX
+const getFooootre: (val: number) => JSX.Element = (val) => {
+	return val ? (
+        <FooterWrapper>{val}</FooterWrapper>
+    ) : (
+        <FooterWrapper>{0}</FooterWrapper>
+    );
+};

@@ -7,49 +7,47 @@ import { List } from "./../List/List";
 import { AppWrapper, ToDoWindow } from "./AppStyles";
 import GlobalStyles from "./GlobalStyles";
 import BackendServie from "./../../services/backend";
-import { AppState, DefaultProps } from "../../interfaces";
+import { IAppState, IDefaultProps, Task } from "../../interfaces";
 
 const backendService = BackendServie.getInstacne();
 
-export class App extends React.Component<DefaultProps, AppState> {
+export class App extends React.Component<IDefaultProps, IAppState> {
 	constructor(props: any) {
 		super(props);
 
 		this.state = {
-			tasks: []
+			tasks: [],
+			allDone: false
 		};
 	}
 
 	componentDidMount() {
-		backendService.getTasks(taskList => {
-			this.setState((state, props) => {
-				return Object.assign({}, state, { tasks: taskList });
-			});
-		});
+		backendService.getTasks().then(
+			(taskList: Task[]): void => {
+				this.setState(state => {
+					return Object.assign({}, state, {
+						tasks: taskList,
+						allDone: true
+					});
+				});
+			}
+		);
 	}
 
 	render() {
 		return (
 			<AppWrapper>
 				<ToDoWindow>
-					<Header />
-					{this.getList()}
-					{this.getFooter()}
+					<Header allDone={this.state.allDone} />
+					<List tasks={this.state.tasks} />
+					<Footer tasks={this.state.tasks} />
 				</ToDoWindow>
 				<GlobalStyles />
 			</AppWrapper>
 		);
 	}
 
-	private getFooter() {
-		return this.state.tasks.length ? (
-			<Footer tasks={this.state.tasks} />
-		) : null;
-	}
+	private getFooter() {}
 
-	private getList() {
-		return this.state.tasks.length ? (
-			<List tasks={this.state.tasks} />
-		) : null;
-	}
+	private getList() {}
 }
