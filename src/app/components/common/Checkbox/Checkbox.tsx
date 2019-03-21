@@ -1,13 +1,17 @@
 import * as React from "react";
-import { IAllDone, IDefaultState } from "../../../interfaces";
+import { IDefaultState } from "../../../interfaces";
+import { ICheckboxProps } from "./interfaces";
 
-export default class Checkbox extends React.Component<IAllDone, IDefaultState> {
+export default class Checkbox extends React.Component<
+	ICheckboxProps,
+	IDefaultState
+> {
 	render() {
 		return (
 			<input
 				type="checkbox"
-				checked={this.props.allDone}
-				onChange={() => {}}
+				checked={this.props.checked}
+				onChange={this.props.toggle}
 			/>
 		);
 	}

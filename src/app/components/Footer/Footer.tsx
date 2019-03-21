@@ -1,6 +1,7 @@
 import * as React from "react";
 import { FooterWrapper } from "./FooterStyles";
-import { IFooterProps, IDefaultState } from "../../interfaces";
+import { IDefaultState } from "../../interfaces";
+import { IFooterProps } from "./interfaces";
 
 export class Footer extends React.Component<IFooterProps, IDefaultState> {
 	private getFooterContent(): JSX.Element {
@@ -11,10 +12,10 @@ export class Footer extends React.Component<IFooterProps, IDefaultState> {
 	}
 }
 // temporary function to try JSX
-const getFooootre: (val: number) => JSX.Element = (val) => {
+const getFooootre: (val: number) => JSX.Element = val => {
 	return val ? (
-        <FooterWrapper>{val}</FooterWrapper>
-    ) : (
-        <FooterWrapper>{0}</FooterWrapper>
-    );
+		<FooterWrapper>{val}</FooterWrapper>
+	) : (
+		<FooterWrapper>{0}</FooterWrapper>
+	);
 };

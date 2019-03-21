@@ -1,10 +1,10 @@
-import { Task, IBackendService } from "../interfaces";
-import { IGetPromise } from "./../interfaces";
+import { ITask } from "../interfaces";
+import { IGetPromise, IBackendService } from "./interfaces";
 
 export default class BackendServie implements IBackendService {
 	private static instance: BackendServie;
 
-	private constructor(private taskList: Task[]) {}
+	private constructor(private taskList: ITask[]) {}
 
 	static getInstacne(): BackendServie {
 		if (!BackendServie.instance) {
@@ -14,42 +14,42 @@ export default class BackendServie implements IBackendService {
 		}
 	}
 
-	getTasks(): Promise<Task[]> {
+	getTasks(): Promise<ITask[]> {
 		return getPromise(this.taskList);
 	}
 
-	addTask(task: Task): Promise<Task[]> {
+	addTask(task: ITask): Promise<ITask[]> {
 		this.taskList.push(task);
 
 		return getPromise(this.taskList);
 	}
 
-	removeTask(id: number): Promise<Task[]> {
+	removeTask(id: number): Promise<ITask[]> {
 		this.taskList = this.taskList.filter(
-			(task: Task): boolean => task.id === id
+			(task: ITask): boolean => task.id === id
 		);
 
 		return getPromise(this.taskList);
 	}
 }
 
-const getPromise: IGetPromise = (val: Task[]) => {
-	let pending: Promise<Task[]> = new Promise((res, rej) => {
+const getPromise: IGetPromise = (val: ITask[]) => {
+	let pending: Promise<ITask[]> = new Promise((res, rej) => {
 		setTimeout(() => res(val), 2000);
 	});
 
 	return pending;
 };
 
-const defaultTasks: Task[] = [
+const defaultTasks: ITask[] = [
 	{
 		text: "defaultTask",
-		isDone: false,
+		isDone: true,
 		id: 1
 	},
 	{
 		text: "defaultTask2",
-		isDone: true,
+		isDone: false,
 		id: 2
 	}
 ];

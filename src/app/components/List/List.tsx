@@ -1,18 +1,25 @@
 import * as React from "react";
 
 import ListItem from "../ListItem/ListItem";
-import { IDefaultState, IListProps } from "./../../interfaces";
+import { IDefaultState, ITask } from "./../../interfaces";
+import { IListProps } from "./interfaces";
 
 export class List extends React.Component<IListProps, IDefaultState> {
 	constructor(props: IListProps) {
 		super(props);
 	}
-	getList() {
-		return this.props.tasks.map(task => (
-			<li key={task.id}>
-				<ListItem />
-			</li>
-		));
+	getList(): JSX.Element[] {
+		return this.props.tasks.map(
+			(task: ITask): JSX.Element => (
+				<li key={task.id}>
+					<ListItem
+						text={task.text}
+						isDone={task.isDone}
+						toggleTask={this.props.toggleTask.bind(null, task.id)}
+					/>
+				</li>
+			)
+		);
 	}
 	render() {
 		return (

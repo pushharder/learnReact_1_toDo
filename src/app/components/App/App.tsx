@@ -7,44 +7,97 @@ import { List } from "./../List/List";
 import { AppWrapper, ToDoWindow } from "./AppStyles";
 import GlobalStyles from "./GlobalStyles";
 import BackendServie from "./../../services/backend";
-import { IAppState, IDefaultProps, Task } from "../../interfaces";
+import { IDefaultProps, ITask, EFilter } from "../../interfaces";
+import { IAppState } from "./interfaces";
 
 const backendService = BackendServie.getInstacne();
 
 export class App extends React.Component<IDefaultProps, IAppState> {
-	constructor(props: any) {
+	constructor(props: IDefaultProps) {
 		super(props);
 
 		this.state = {
 			tasks: [],
-			allDone: false
+			filter: EFilter.All
 		};
 	}
 
-	componentDidMount() {
+	componentDidMount = () => {
 		backendService.getTasks().then(
-			(taskList: Task[]): void => {
+			(taskList: ITask[]): void => {
 				this.setState({
 					tasks: taskList
 				});
 			}
 		);
-	}
+	};
 
-	render() {
+	render = () => {
 		return (
 			<AppWrapper>
 				<ToDoWindow>
-					<Header allDone={this.state.allDone} />
-					<List tasks={this.state.tasks} />
-					<Footer tasks={this.state.tasks} />
+					<Header
+						allDone={this.isAllDone()}
+						switchAll={this.switchAll}
+					/>
+					<List
+						tasks={this.state.tasks}
+						toggleTask={this.switchTask}
+					/>
+					<Footer tasks={this.state.tasks} filter={this.state.filter}/>
 				</ToDoWindow>
 				<GlobalStyles />
 			</AppWrapper>
 		);
-	}
+	};
 
-	private getFooter() {}
+	switchAll = (event: React.ChangeEvent<HTMLInputElement>): void => {
+		this.setState({
+			tasks: this.state.tasks.map(
+				((
+					event: React.ChangeEvent<HTMLInputElement>,
+					task: ITask
+				): ITask => {
+					return Object.assign({}, task, {
+						isDone: event.target.checked
+					});
+				}).bind(null, event)
+			)
+		});
+	};
 
-	private getList() {}
+	switchTask = (
+		id: number,
+		event: React.ChangeEvent<HTMLInputElement>
+	): void => {
+		this.setState({
+			tasks: this.state.tasks.map(
+				((
+					event: React.ChangeEvent<HTMLInputElement>,
+					id: number,
+					task: ITask
+				): ITask => {
+					return task.id === id
+						? Object.assign({}, task, {
+								isDone: event.target.checked
+						  })
+						: Object.assign({}, task);
+				}).bind(null, event, id)
+			)
+		});
+	};
+
+	private getFooter = () => {};
+
+	private getList = () => {};
+
+	private isAllDone = (): boolean => {
+		if (!this.state.tasks.length) return false;
+
+		for (let i = 0; i < this.state.tasks.length; i++) {
+			if (!this.state.tasks[i].isDone) return false;
+		}
+
+		return true;
+	};
 }

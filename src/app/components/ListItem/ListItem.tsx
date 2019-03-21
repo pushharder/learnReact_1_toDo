@@ -1,8 +1,21 @@
 import * as React from "react";
-import { IDefaultProps, IDefaultState } from "../../interfaces";
+import { IDefaultState } from "../../interfaces";
+import Checkbox from "./../common/Checkbox/Checkbox";
+import { IListItemProps } from "./interfaces";
 
-export default class ListItem extends React.Component<IDefaultProps, IDefaultState> {
-	render() {
-		return <div>ListItem</div>;
-	}
+export default class ListItem extends React.Component<
+	IListItemProps,
+	IDefaultState
+> {
+	render = () => {
+		return (
+			<>
+				<Checkbox
+					toggle={this.props.toggleTask}
+					checked={this.props.isDone}
+				/>
+				<span>{this.props.text}</span>
+			</>
+		);
+	};
 }
