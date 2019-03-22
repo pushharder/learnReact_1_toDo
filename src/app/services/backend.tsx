@@ -1,45 +1,56 @@
-import { Task } from "../interfaces";
+import { ITask } from "../interfaces";
+import { IGetPromise, IBackendService } from "./interfaces";
 
-const defaultTasks: Task[] = [
-  {
-    text: "defaultTask",
-    isDone: false,
-    id: 1
-  },
-  {
-    text: "defaultTask2",
-    isDone: true,
-    id: 2
-  }
-];
+export default class BackendServie implements IBackendService {
+	private static instance: BackendServie;
 
-class BackendServie {
-  private static instance: BackendServie;
-  private constructor(private taskList: Task[]) {}
+	private constructor(private taskList: ITask[]) {}
 
-  private static getInstacne() {
-    if (!BackendServie.instance) {
-      return (BackendServie.instance = new BackendServie(defaultTasks));
-    } else {
-      return BackendServie.instance;
-    }
-  }
+	static getInstacne(): BackendServie {
+		if (!BackendServie.instance) {
+			return (BackendServie.instance = new BackendServie(defaultTasks));
+		} else {
+			return BackendServie.instance;
+		}
+	}
 
-  getTasks(): Task[] {
-    return this.taskList;
-  }
+	getTasks(): Promise<ITask[]> {
+		return getPromise(this.taskList);
+	}
 
-  addTask(task: Task): Task[] {
-    this.taskList.push(task);
+	addTask(task: ITask): Promise<ITask[]> {
+		return getPromise(this.taskList).then((val: ITask[])=>{
+            val.push(task);
+            return val;
+        });
+	}
 
-    return this.getTasks();
-  }
+	removeTask(id: number): Promise<ITask[]> {
+		this.taskList = this.taskList.filter(
+			(task: ITask): boolean => task.id === id
+		);
 
-  removeTask(id: number): Task[] {
-    this.taskList = this.taskList.filter(
-      (task: Task): boolean => task.id === id
-    );
-
-    return this.getTasks();
-  }
+		return getPromise(this.taskList);
+	}
 }
+
+const getPromise: IGetPromise = (val: ITask[]) => {
+	let pending: Promise<ITask[]> = new Promise((res, rej) => {
+		setTimeout(() => res(val), 2000);
+	});
+
+	return pending;
+};
+
+const defaultTasks: ITask[] = [
+	{
+		text: "defaultTask",
+		isDone: true,
+		id: 1
+	},
+	{
+		text: "defaultTask2",
+		isDone: false,
+		id: 2
+	}
+];
