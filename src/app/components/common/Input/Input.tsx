@@ -1,30 +1,39 @@
-import * as React from "react";
+import * as React from 'react';
+import { IInputState, IInputProps } from './interfaces';
 
-export default class Input extends React.Component<{}, {text: string}> {
-    constructor(props: {}){
-        super(props);
-        this.state = {
-            text: ''
-        }
+export default class Input extends React.Component<IInputProps, IInputState> {
+	constructor(props: IInputProps) {
+		super(props);
+		this.state = {
+			text: ''
+		};
+	}
 
-    }
-	render() {
+	render = () => {
 		return (
-			<form
-				onSubmit={(e) => {
-                    e.preventDefault();
-                    console.log(this.state.text);
-                    this.setState({text: ''});
-				}}
-			>
-				<input type="text" value={this.state.text} onChange={this.setText}/>
+			<form onSubmit={this.handleSubmit}>
+				<input
+					type='text'
+					value={this.state.text}
+					onChange={this.setText}
+					readOnly={!this.props.isInputEnable}
+				/>
 			</form>
 		);
-    }
-    
-    setText =(e: any) =>{
-        this.setState({
-            text: e.target.value
-        })
-    }
+	};
+
+	setText = (event: React.ChangeEvent<HTMLInputElement>): void => {
+		this.setState({
+			text: event.target.value
+		});
+	};
+
+	handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		this.props.isInputEnable &&
+			this.props.handleInput(this.state.text).then(() => {
+				this.setState({ text: '' });
+			});
+	};
 }
+//TODO: pass promise to the component and manage state once promise has been resolved

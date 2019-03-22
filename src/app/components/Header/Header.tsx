@@ -1,12 +1,12 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { HeaderContainer } from "./HeaderStyles";
+import { HeaderContainer } from './HeaderStyles';
 
-import Checkbox from "../common/Checkbox/Checkbox";
-import Input from "../common/Input/Input";
+import Checkbox from '../common/Checkbox/Checkbox';
+import Input from '../common/Input/Input';
 
-import { IDefaultState } from "../../interfaces";
-import { IHeaerProps } from "./interfaces";
+import { IDefaultState } from '../../interfaces';
+import { IHeaerProps } from './interfaces';
 
 export class Header extends React.Component<IHeaerProps, IDefaultState> {
 	render() {
@@ -16,7 +16,7 @@ export class Header extends React.Component<IHeaerProps, IDefaultState> {
 					toggle={this.props.switchAll}
 					checked={this.props.allDone}
 				/>
-				<Input />
+				<Input handleInput={this.props.addTask} isInputEnable={this.props.isInputEnable}/>
 			</HeaderContainer>
 		);
 	}

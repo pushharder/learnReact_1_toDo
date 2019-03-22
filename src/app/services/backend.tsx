@@ -19,9 +19,10 @@ export default class BackendServie implements IBackendService {
 	}
 
 	addTask(task: ITask): Promise<ITask[]> {
-		this.taskList.push(task);
-
-		return getPromise(this.taskList);
+		return getPromise(this.taskList).then((val: ITask[])=>{
+            val.push(task);
+            return val;
+        });
 	}
 
 	removeTask(id: number): Promise<ITask[]> {
