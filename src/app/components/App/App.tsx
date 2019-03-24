@@ -18,8 +18,8 @@ export class App extends React.Component<IDefaultProps, IAppState> {
 
 		this.state = {
 			tasks: [],
-            filter: EFilter.All,
-            isInputEnable: false
+			filter: EFilter.All,
+			isInputEnable: false
 		};
 	}
 
@@ -27,8 +27,8 @@ export class App extends React.Component<IDefaultProps, IAppState> {
 		backendService.getTasks().then(
 			(taskList: ITask[]): void => {
 				this.setState({
-                    tasks: taskList,
-                    isInputEnable: true
+					tasks: taskList,
+					isInputEnable: true
 				});
 			}
 		);
@@ -41,17 +41,19 @@ export class App extends React.Component<IDefaultProps, IAppState> {
 					<Header
 						allDone={this.isAllDone()}
 						switchAll={this.switchAll}
-                        addTask={this.addTask}
-                        isInputEnable ={this.state.isInputEnable}
+						addTask={this.addTask}
+						isInputEnable={this.state.isInputEnable}
 					/>
 					<List
 						tasks={this.state.tasks}
 						toggleTask={this.switchTask}
+						isInputEnable={this.state.isInputEnable}
 					/>
 					<Footer
 						tasks={this.state.tasks}
 						filter={this.state.filter}
 					/>
+					{this.state.isInputEnable ? null : 'loading...'}
 				</ToDoWindow>
 				<GlobalStyles />
 			</AppWrapper>
@@ -59,51 +61,44 @@ export class App extends React.Component<IDefaultProps, IAppState> {
 	};
 
 	switchAll = (event: React.ChangeEvent<HTMLInputElement>): void => {
-		this.setState({
-			tasks: this.state.tasks.map(
-				((
-					event: React.ChangeEvent<HTMLInputElement>,
-					task: ITask
-				): ITask => {
-					return Object.assign({}, task, {
-						isDone: event.target.checked
-					});
-				}).bind(null, event)
-			)
-		});
+		this.setState({ isInputEnable: false });
+		backendService.swithcAll(event.target.checked).then(
+			(taskList: ITask[]): void => {
+				this.setState({
+					tasks: taskList,
+					isInputEnable: true
+				});
+			}
+		);
 	};
 
 	switchTask = (
 		id: number,
 		event: React.ChangeEvent<HTMLInputElement>
 	): void => {
-		this.setState({
-			tasks: this.state.tasks.map(
-				((
-					event: React.ChangeEvent<HTMLInputElement>,
-					id: number,
-					task: ITask
-				): ITask => {
-					return task.id === id
-						? Object.assign({}, task, {
-								isDone: event.target.checked
-						  })
-						: Object.assign({}, task);
-				}).bind(null, event, id)
-			)
-		});
+		this.setState({ isInputEnable: false });
+		backendService.switchTask(id, event.target.checked).then(
+			(taskList: ITask[]): void => {
+				this.setState({
+					tasks: taskList,
+					isInputEnable: true
+				});
+			}
+		);
 	};
 
 	addTask = (val: string): Promise<any> => {
-        this.setState({isInputEnable: false});
+		this.setState({ isInputEnable: false });
 		return backendService
 			.addTask({ text: val, isDone: false, id: Math.random() })
-			.then((taskList: ITask[]): void => {
-				this.setState({
-                    tasks: taskList,
-                    isInputEnable: true
-				});
-			});
+			.then(
+				(taskList: ITask[]): void => {
+					this.setState({
+						tasks: taskList,
+						isInputEnable: true
+					});
+				}
+			);
 	};
 
 	private getFooter = () => {};
