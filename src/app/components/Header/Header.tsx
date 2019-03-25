@@ -15,8 +15,12 @@ export class Header extends React.Component<IHeaerProps, IDefaultState> {
 				<Checkbox
 					toggle={this.props.switchAll}
 					checked={this.props.allDone}
+					isCheckboxEnable={this.props.isInputEnable}
 				/>
-				<Input handleInput={this.props.addTask} isInputEnable={this.props.isInputEnable}/>
+				<Input
+					handleInput={this.props.addTask}
+					isInputEnable={this.props.isInputEnable}
+				/>
 			</HeaderContainer>
 		);
 	}

@@ -1,5 +1,5 @@
-import { ITask } from "../interfaces";
-import { IGetPromise, IBackendService } from "./interfaces";
+import { ITask } from '../interfaces';
+import { IGetPromise, IBackendService } from './interfaces';
 
 export default class BackendServie implements IBackendService {
 	private static instance: BackendServie;
@@ -19,10 +19,10 @@ export default class BackendServie implements IBackendService {
 	}
 
 	addTask(task: ITask): Promise<ITask[]> {
-		return getPromise(this.taskList).then((val: ITask[])=>{
-            val.push(task);
-            return val;
-        });
+		return getPromise(this.taskList).then((val: ITask[]) => {
+			val.push(task);
+			return val;
+		});
 	}
 
 	removeTask(id: number): Promise<ITask[]> {
@@ -32,6 +32,26 @@ export default class BackendServie implements IBackendService {
 
 		return getPromise(this.taskList);
 	}
+
+	switchTask = (id: number, isDone: boolean): Promise<ITask[]> => {
+		this.taskList = this.taskList.map(
+			(task: ITask): ITask =>
+				task.id === id
+					? Object.assign({}, task, { isDone: isDone })
+					: task
+		);
+
+		return getPromise(this.taskList);
+	};
+
+	swithcAll = (isDone: boolean): Promise<ITask[]> => {
+		this.taskList = this.taskList.map(
+			(task: ITask): ITask => {
+				return Object.assign({}, task, { isDone: isDone });
+			}
+		);
+		return getPromise(this.taskList);
+	};
 }
 
 const getPromise: IGetPromise = (val: ITask[]) => {
@@ -44,12 +64,12 @@ const getPromise: IGetPromise = (val: ITask[]) => {
 
 const defaultTasks: ITask[] = [
 	{
-		text: "defaultTask",
+		text: 'defaultTask',
 		isDone: true,
 		id: 1
 	},
 	{
-		text: "defaultTask2",
+		text: 'defaultTask2',
 		isDone: false,
 		id: 2
 	}

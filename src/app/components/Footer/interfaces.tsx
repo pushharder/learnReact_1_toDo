@@ -1,6 +1,7 @@
-import { ITask, EFilter } from "../../interfaces";
+import { ITask, EFilter } from '../../interfaces';
 
 export interface IFooterProps {
-    tasks: ITask[];
-    filter: EFilter
+	tasksLength: number;
+	filter: EFilter;
+	changeFilter: (filterVal: EFilter) => void;
 }

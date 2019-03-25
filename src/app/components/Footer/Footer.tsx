@@ -2,20 +2,16 @@ import * as React from "react";
 import { FooterWrapper } from "./FooterStyles";
 import { IDefaultState } from "../../interfaces";
 import { IFooterProps } from "./interfaces";
+import { FilterPanel } from './../FilterPanel/FilterPanel';
 
 export class Footer extends React.Component<IFooterProps, IDefaultState> {
-	private getFooterContent(): JSX.Element {
-		return getFooootre(this.props.tasks.length);
-	}
 	render() {
-		return this.getFooterContent();
+		return (
+            <FooterWrapper>
+                {this.props.tasksLength}
+               <FilterPanel activeFilter={this.props.filter} changeFilter = {this.props.changeFilter}></FilterPanel>  
+            </FooterWrapper>
+        )
 	}
 }
-// temporary function to try JSX
-const getFooootre: (val: number) => JSX.Element = val => {
-	return val ? (
-		<FooterWrapper>{val}</FooterWrapper>
-	) : (
-		<FooterWrapper>{0}</FooterWrapper>
-	);
-};
+
