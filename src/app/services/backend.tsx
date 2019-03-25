@@ -47,8 +47,7 @@ export default class BackendServie implements IBackendService {
 	swithcAll = (isDone: boolean): Promise<ITask[]> => {
 		this.taskList = this.taskList.map(
 			(task: ITask): ITask => {
-				task.isDone = isDone;
-				return task;
+				return Object.assign({}, task, { isDone: isDone });
 			}
 		);
 		return getPromise(this.taskList);

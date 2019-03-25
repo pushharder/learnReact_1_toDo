@@ -12,13 +12,12 @@ export default class Checkbox extends React.Component<
 				type='checkbox'
 				checked={this.props.checked}
 				onChange={this.props.toggle}
-				readOnly={this.props.isCheckboxEnable}
 			/>
 		) : (
 			<input
 				type='checkbox'
 				checked={this.props.checked}
-				readOnly={this.props.isCheckboxEnable}
+				readOnly={true}
 			/>
 		);
 	};

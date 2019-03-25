@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
 export const FooterWrapper = styled.div`
-	color: red;
+    color: red;
+    display: flex;
 `;
