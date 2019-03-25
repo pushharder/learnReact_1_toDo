@@ -45,12 +45,13 @@ export class App extends React.Component<IDefaultProps, IAppState> {
 						isInputEnable={this.state.isInputEnable}
 					/>
 					<List
-						tasks={this.state.tasks}
+						tasks={this.filterTasks()}
 						toggleTask={this.switchTask}
 						isInputEnable={this.state.isInputEnable}
 					/>
 					<Footer
-						tasks={this.state.tasks}
+						changeFilter={this.changeFilter}
+						tasksLength={this.filterTasks().length}
 						filter={this.state.filter}
 					/>
 					{this.state.isInputEnable ? null : 'loading...'}
@@ -101,9 +102,27 @@ export class App extends React.Component<IDefaultProps, IAppState> {
 			);
 	};
 
-	private getFooter = () => {};
+	filterTasks = (): ITask[] => {
+		return this.state.tasks.filter((task: ITask) => {
+			switch (this.state.filter) {
+				case EFilter.All:
+					return true;
+				case EFilter.Active:
+					return task.isDone === false;
+				case EFilter.Completed:
+					return task.isDone === true;
 
-	private getList = () => {};
+				default:
+					return true;
+			}
+		});
+	};
+
+	changeFilter = (filterVal: EFilter): void => {
+		this.setState({
+			filter: filterVal
+		});
+	};
 
 	private isAllDone = (): boolean => {
 		if (!this.state.tasks.length) return false;
