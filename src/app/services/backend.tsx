@@ -54,7 +54,7 @@ export default class BackendServie implements IBackendService {
 	};
 }
 
-const getPromise: IGetPromise = (val: ITask[]) => {
+const getPromise: IGetPromise<ITask[]> = (val: ITask[]) => {
 	let pending: Promise<ITask[]> = new Promise((res, rej) => {
 		setTimeout(() => res(val), 2000);
 	});

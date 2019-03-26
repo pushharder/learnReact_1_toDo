@@ -6,6 +6,6 @@ export interface IBackendService {
 	removeTask(id: number): Promise<ITask[]>;
 }
 
-export interface IGetPromise {
-	(val: ITask[]): Promise<ITask[]>;
+export interface IGetPromise <T>{
+	(val: T): Promise<T>;
 }
