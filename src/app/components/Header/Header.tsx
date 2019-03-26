@@ -1,27 +1,28 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { HeaderContainer } from './HeaderStyles';
+import { HeaderContainer } from "./HeaderStyles";
 
-import Checkbox from '../common/Checkbox/Checkbox';
-import Input from '../common/Input/Input';
+import Checkbox from "../common/Checkbox/Checkbox";
+import Input from "../common/Input/Input";
 
-import { IDefaultState } from '../../interfaces';
-import { IHeaerProps } from './interfaces';
+import { IHeaerProps } from "./interfaces";
 
-export class Header extends React.Component<IHeaerProps, IDefaultState> {
-	render() {
-		return (
-			<HeaderContainer>
-				<Checkbox
-					toggle={this.props.switchAll}
-					checked={this.props.allDone}
-					isCheckboxEnable={this.props.isInputEnable}
-				/>
-				<Input
-					handleInput={this.props.addTask}
-					isInputEnable={this.props.isInputEnable}
-				/>
-			</HeaderContainer>
-		);
-	}
-}
+const Header: React.FunctionComponent<IHeaerProps> = ({
+	allDone,
+	isInputEnable,
+	switchAll,
+	addTask
+}: IHeaerProps): JSX.Element => {
+	return (
+		<HeaderContainer>
+			<Checkbox
+				toggle={switchAll}
+				checked={allDone}
+				isCheckboxEnable={isInputEnable}
+			/>
+			<Input handleInput={addTask} isInputEnable={isInputEnable} />
+		</HeaderContainer>
+	);
+};
+
+export default Header;

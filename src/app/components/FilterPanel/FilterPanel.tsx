@@ -1,26 +1,23 @@
-import * as React from 'react';
-import { IFIlterPanelProps } from './interfaces';
-import { IDefaultState, EFilter } from '../../interfaces';
-import { FilterPanelWrapper } from './FilterPanelStyles';
+import * as React from "react";
+import { IFIlterPanelProps } from "./interfaces";
+import { EFilter } from "../../interfaces";
+import { FilterPanelWrapper } from "./FilterPanelStyles";
 
-export class FilterPanel extends React.Component<
-	IFIlterPanelProps,
-	IDefaultState
-> {
-	render() {
-		return (
-			<FilterPanelWrapper>
-				{Object.keys(EFilter).map(key => {
-					return (
-						<button
-							key={key}
-							onClick={this.props.changeFilter.bind(null, key)}
-						>
-							{key}
-						</button>
-					);
-				})}
-			</FilterPanelWrapper>
-		);
-	}
-}
+const FilterPanel: React.FunctionComponent<IFIlterPanelProps> = ({
+	changeFilter,
+	activeFilter
+}: IFIlterPanelProps): JSX.Element => {
+	return (
+		<FilterPanelWrapper>
+			{Object.keys(EFilter).map(key => {
+				return (
+					<button key={key} onClick={changeFilter.bind(null, key)}>
+						{key}
+					</button>
+				);
+			})}
+		</FilterPanelWrapper>
+	);
+};
+
+export default FilterPanel;
