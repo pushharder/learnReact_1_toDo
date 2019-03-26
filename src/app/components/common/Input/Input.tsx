@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { IInputState, IInputProps } from './interfaces';
+import { TestContext } from './../../App/context';
 
 export default class Input extends React.Component<IInputProps, IInputState> {
 	constructor(props: IInputProps) {
@@ -10,6 +11,8 @@ export default class Input extends React.Component<IInputProps, IInputState> {
 	}
 
 	render = () => {
+        let value = this.context;
+        console.log(value);
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<input
@@ -18,6 +21,7 @@ export default class Input extends React.Component<IInputProps, IInputState> {
 					onChange={this.setText}
 					readOnly={!this.props.isInputEnable}
 				/>
+                
 			</form>
 		);
 	};
@@ -34,6 +38,7 @@ export default class Input extends React.Component<IInputProps, IInputState> {
 			this.props.handleInput(this.state.text).then(() => {
 				this.setState({ text: '' });
 			});
-	};
+    };
+    static contextType = TestContext;
 }
 //TODO: pass promise to the component and manage state once promise has been resolved

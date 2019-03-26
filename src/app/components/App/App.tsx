@@ -1,16 +1,19 @@
-import * as React from "react";
+import * as React from 'react';
 
-import Header from "./../Header/Header";
-import Footer from "./../Footer/Footer";
-import List from "./../List/List";
+import Header from './../Header/Header';
+import Footer from './../Footer/Footer';
+import List from './../List/List';
 
-import { AppWrapper, ToDoWindow } from "./AppStyles";
-import GlobalStyles from "./GlobalStyles";
-import BackendServie from "./../../services/backend";
-import { IDefaultProps, ITask, EFilter } from "../../interfaces";
-import { IAppState } from "./interfaces";
+import { AppWrapper, ToDoWindow } from './AppStyles';
+import GlobalStyles from './GlobalStyles';
+import BackendServie from './../../services/backend';
+import { IDefaultProps, ITask, EFilter } from '../../interfaces';
+import { IAppState } from './interfaces';
+import {  TestContextProvider } from './context';
 
 const backendService = BackendServie.getInstacne();
+
+
 
 export class App extends React.Component<IDefaultProps, IAppState> {
 	constructor(props: IDefaultProps) {
@@ -38,23 +41,25 @@ export class App extends React.Component<IDefaultProps, IAppState> {
 		return (
 			<AppWrapper>
 				<ToDoWindow>
-					<Header
-						allDone={this.isAllDone()}
-						switchAll={this.switchAll}
-						addTask={this.addTask}
-						isInputEnable={this.state.isInputEnable}
-					/>
-					<List
-						tasks={this.filterTasks()}
-						toggleTask={this.switchTask}
-						isInputEnable={this.state.isInputEnable}
-					/>
+					<TestContextProvider value='dark'>
+						<Header
+							allDone={this.isAllDone()}
+							switchAll={this.switchAll}
+							addTask={this.addTask}
+							isInputEnable={this.state.isInputEnable}
+						/>
+						<List
+							tasks={this.filterTasks()}
+							toggleTask={this.switchTask}
+							isInputEnable={this.state.isInputEnable}
+						/>
+					</TestContextProvider>
 					<Footer
 						changeFilter={this.changeFilter}
 						tasksLength={this.filterTasks().length}
 						filter={this.state.filter}
 					/>
-					{this.state.isInputEnable ? null : "loading..."}
+					{this.state.isInputEnable ? null : 'loading...'}
 				</ToDoWindow>
 				<GlobalStyles />
 			</AppWrapper>

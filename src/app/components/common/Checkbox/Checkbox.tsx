@@ -3,11 +3,15 @@ import { ICheckboxProps } from "./interfaces";
 
 const Checkbox: React.FunctionComponent<ICheckboxProps> = ({
 	checked,
-	toggle,
+    toggle,
+    value,
 	isCheckboxEnable
 }: ICheckboxProps): JSX.Element => {
 	return isCheckboxEnable ? (
-		<input type="checkbox" checked={checked} onChange={toggle} />
+        <>
+            <span>{value}</span>
+		    <input type="checkbox" checked={checked} onChange={toggle} />
+        </>
 	) : (
 		<input type="checkbox" checked={checked} readOnly={true} />
 	);

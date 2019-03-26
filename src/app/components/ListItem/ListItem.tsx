@@ -1,6 +1,7 @@
-import * as React from "react";
-import Checkbox from "./../common/Checkbox/Checkbox";
-import { IListItemProps } from "./interfaces";
+import * as React from 'react';
+import Checkbox from './../common/Checkbox/Checkbox';
+import { IListItemProps } from './interfaces';
+import { TestContextConsumer } from './../App/context';
 
 const ListItem: React.FunctionComponent<IListItemProps> = ({
 	text,
@@ -10,11 +11,16 @@ const ListItem: React.FunctionComponent<IListItemProps> = ({
 }: IListItemProps): JSX.Element => {
 	return (
 		<>
-			<Checkbox
-				toggle={toggleTask}
-				checked={isDone}
-				isCheckboxEnable={isInputEnable}
-			/>
+			<TestContextConsumer>
+				{value => (
+					<Checkbox
+						toggle={toggleTask}
+						checked={isDone}
+						value={value}
+						isCheckboxEnable={isInputEnable}
+					/>
+				)}
+			</TestContextConsumer>
 			<span>{text}</span>
 		</>
 	);

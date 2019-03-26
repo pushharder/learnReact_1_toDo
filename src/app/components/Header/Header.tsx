@@ -17,7 +17,8 @@ const Header: React.FunctionComponent<IHeaerProps> = ({
 		<HeaderContainer>
 			<Checkbox
 				toggle={switchAll}
-				checked={allDone}
+                checked={allDone}
+                value={'SFDSDFS'}
 				isCheckboxEnable={isInputEnable}
 			/>
 			<Input handleInput={addTask} isInputEnable={isInputEnable} />
